@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Robert Research Radios</title>
-        <link>https://robertresearchradios.com/</link>
-        <description>Recent content on Robert Research Radios</description>
+        <title>Posts on Robert Research Radios</title>
+        <link>https://robertresearchradios.com/post/</link>
+        <description>Recent content in Posts on Robert Research Radios</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://robertresearchradios.com/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://robertresearchradios.com/post/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>MFJ-1708B RF Sense TR Switch non-SDR to SDR Receive Power Splitting Model Conversion</title>
         <link>https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/</link>
         <pubDate>Thu, 28 Apr 2022 00:00:00 +0000</pubDate>
