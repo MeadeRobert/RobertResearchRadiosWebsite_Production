@@ -7,11 +7,11 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <lastBuildDate>Thu, 28 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="https://robertresearchradios.com/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>MFJ-1708B RF Sense TR Switch non-SDR to SDR Receive Power Splitting Model Conversion</title>
-        <link>https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/</link>
+        <title>MFJ-1708B RF Sense TR Switch non-SDR to SDR Model Conversion</title>
+        <link>https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/</link>
         <pubDate>Thu, 28 Apr 2022 00:00:00 +0000</pubDate>
         
-        <guid>https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/</guid>
+        <guid>https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/</guid>
         <description>&lt;p&gt;While designing my Amateur Radio V/U satellite communications station using omnidirectional antennas, I toyed with the idea of relay-based TX/RX switches with integrated 3dB power dividers to supply signals to a monitoring SDR without the filters of the IC-9700 in the receive chain. This thought was an alternative to using the PTRX-9700 Pandapter as a signal cloning device, and it had the added benefit of being able to use more of the M2 Antennas Eggbeaters’ frequency ranges (the full 136-148 MHz and 400-470 MHz advertised). Unfortunately, this system configuration resulted in insufficient SNR for decoding much telemetry or other signals in the 146/433 MHz Amateur Radio V/U Satcom Bands wihtout adding a mast-mounted pre-amp. Despite this, my quest to explore this technical solution in a world filled with covid-driven part scarcity led to a useful development regarding a common MFJ product.&lt;/p&gt;
 &lt;p&gt;I fell into the same trap as K1GMM and purchased some MFJ-1708B RF Sense TR Switches thinking they were identical in function to the MFJ-1708B RF Sense SDR Receiver TR Switches. The Switches I bought used a common circuit board design with the SDR model switches, but the non-SDR model did not split the RF receive output; rather, it only served it to the “REC” output. MFJ, like Ten-Tec, provides schematics for many of their products, so I set out to see if I might easily convert this non-SDR model switch to perform as the SDR one.&lt;/p&gt;
 &lt;p&gt;While the physical circuit boards used for the various models of MFJ-1708B devices are all the same, the populated portions of the layout differ in 4 ways:&lt;/p&gt;
@@ -22,10 +22,10 @@
 &lt;li&gt;A 100 Ohm Resistor shorts the end-point leads of TR1 on SDR Version&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;The differences are shown in red markup below:&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B_SDR.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/1708B_SDR.jpg&#34;
 	width=&#34;1719&#34;
 	height=&#34;1124&#34;
-	srcset=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B_SDR_hu9c842cd10e057cc3039ae36532e19a63_216454_480x0_resize_q75_box.jpg 480w, https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B_SDR_hu9c842cd10e057cc3039ae36532e19a63_216454_1024x0_resize_q75_box.jpg 1024w&#34;
+	srcset=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/1708B_SDR_hu9c842cd10e057cc3039ae36532e19a63_216454_480x0_resize_q75_box.jpg 480w, https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/1708B_SDR_hu9c842cd10e057cc3039ae36532e19a63_216454_1024x0_resize_q75_box.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;1708B_SDR Schematic&#34;
@@ -36,10 +36,10 @@
 		data-flex-basis=&#34;367px&#34;
 	
 &gt;
-&lt;img src=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B.jpg&#34;
+&lt;img src=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/1708B.jpg&#34;
 	width=&#34;1553&#34;
 	height=&#34;994&#34;
-	srcset=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B_hu765adf06ea705e97ec91824457bbe1b1_177857_480x0_resize_q75_box.jpg 480w, https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B_hu765adf06ea705e97ec91824457bbe1b1_177857_1024x0_resize_q75_box.jpg 1024w&#34;
+	srcset=&#34;https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/1708B_hu765adf06ea705e97ec91824457bbe1b1_177857_480x0_resize_q75_box.jpg 480w, https://robertresearchradios.com/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/1708B_hu765adf06ea705e97ec91824457bbe1b1_177857_1024x0_resize_q75_box.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 		alt=&#34;1708B Schematic&#34;
