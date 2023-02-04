@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Using RTL-433 and Python to Create a 4x Individual Tire TPMS Readout'><title>RTL-SDR Mazda CX-5 TPMS</title>
+
+<link rel='canonical' href='https://robertresearchradios.com/p/rtl-sdr-mazda-cx-5-tpms/'>
+
+<link rel="stylesheet" href="/scss/style.min.d9e0562edde3d2bdf9d3d81365095a29d062ddaaa5d671f22168e57dfdb18b4f.css"><meta property='og:title' content='RTL-SDR Mazda CX-5 TPMS'>
+<meta property='og:description' content='Using RTL-433 and Python to Create a 4x Individual Tire TPMS Readout'>
+<meta property='og:url' content='https://robertresearchradios.com/p/rtl-sdr-mazda-cx-5-tpms/'>
+<meta property='og:site_name' content='Robert Research Radios'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-02-04T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-02-04T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="RTL-SDR Mazda CX-5 TPMS">
+<meta name="twitter:description" content="Using RTL-433 and Python to Create a 4x Individual Tire TPMS Readout">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    <img src="/img/avatar.png" width="300" height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Robert Research Radios</a></h1>
+            <h2 class="site-description">Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' target="_blank">
+                
+                
+                    
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/shop' target="_blank">
+                
+                
+                    
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Cart</title><circle cx="176" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256"/><path d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+                
+                <span>Shop</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/rtl-sdr-mazda-cx-5-tpms/">RTL-SDR Mazda CX-5 TPMS</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Using RTL-433 and Python to Create a 4x Individual Tire TPMS Readout
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 04, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <p>My 2022 CX-5 had the low tire pressure light turn on the other day, and my first response was to start mashing the steering wheel info button to see which tire was low on pressure. Puzzled when I did not find a readout of the tire pressures on the dash, I checked the paper and digital manuals for more information. After reading these and investigating other sources, I found that while Mazda uses direct TPMS sensors that transmit pressure and temperature data with accompanying unique sensor ids to the car&rsquo;s computer via RF signals, the car does not a have a system to interpret those readings individually. The year is the current year, and finding this wholly unacceptable, I set out to build myself a TPMS receiver that could interpret these readings for each tire separately immediately after I repaired the hole created by a nail and reinflated the tire with low pressure.</p>
+<p><img src="/p/rtl-sdr-mazda-cx-5-tpms/Low_Tire_Pressure_Light.png"
+	width="1499"
+	height="732"
+	srcset="/p/rtl-sdr-mazda-cx-5-tpms/Low_Tire_Pressure_Light_hub953078653ecca7ea5a7275a4812c620_978250_480x0_resize_box_3.png 480w, /p/rtl-sdr-mazda-cx-5-tpms/Low_Tire_Pressure_Light_hub953078653ecca7ea5a7275a4812c620_978250_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Low Tire Pressure Display"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="204"
+		data-flex-basis="491px"
+	
+></p>
+<p><a class="link" href="https://github.com/merbanan/rtl_433"  target="_blank" rel="noopener"
+    >RTL-433</a> (rtl_433) is an open source software project written in C that uses RTL-SDR type devices to demodulate common electronic device pulse signals on ISM (Part 18) or Part 15 bands to include 315 MHz, 433 MHZ, 868 MHz, 915 MHz, and more. The software has the capability to do pulse analysis with minimized data descriptors and to provide baseband snippets of captured pulses for further analysis. If I was going to have to write a decoder, it should be an extension to this already huge project that sports ~200 common pulse signal decoders, and the existing analysis tools provided by rtl_433 would prove very helpful in this task should it be necessary.</p>
+<p>My first step in the process to build the TPMS readout was to just run the rtl_433 command with my car off and in my garage to see if I would pick up any signals from the car&rsquo;s tire sensors, but I received no signals in doing this. I had found another article on this subject of <a class="link" href="https://xplorenlearn.wordpress.com/2019/01/21/reverse-engineering-tpms-protocol-mazda-5/"  target="_blank" rel="noopener"
+    >reverse engineering Mazda TPMS sensors</a> which all but confirmed that in the US these would be 315 MHz signals in 70kHz BW FSK using standard manchester encoding, so I wanted to look at the baseband data being received by my RTL-SDRv3 to see if I was observing anything matching that description. When I ran gqrx or sdrpp and observed the waterfall, all I saw was ~200kHz BW BFSK signals from my car&rsquo;s fob interogator system and the responses from the fob in my pocket.</p>
+<p>After doing some more reading online, I learned that TPMS sensors in car tires are powered by small batteries that have to last for several years. To save power, they only transmit when large changes in tire pressure are observed or when the tires are spinning, that is when the sensor is accelerating. I repeated my initial experiment with rtl_433 again, this time collecting signals while I was driving the car, and I observed several similar TPMS protocol decoders reporting back data.</p>
+<p><img src="/p/rtl-sdr-mazda-cx-5-tpms/rtl_433_output.png"
+	width="1514"
+	height="873"
+	srcset="/p/rtl-sdr-mazda-cx-5-tpms/rtl_433_output_huedad5ddba15f0f77ae1eb4ee0700c052_1948266_480x0_resize_box_3.png 480w, /p/rtl-sdr-mazda-cx-5-tpms/rtl_433_output_huedad5ddba15f0f77ae1eb4ee0700c052_1948266_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="RTL-433 Output when Driving"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="173"
+		data-flex-basis="416px"
+	
+></p>
+<p>Now that I had data from rtl_433, I looked for the decoder data output that most accurately reported data about my tires. It seemed the one giving me readings of roughly 210-220 kPa and temps around 0C (it&rsquo;s cold here in DM79 right now) was the most reasonable; this was the Abarth-124Spider decoder (-R 156) already built for rtl_433. Looking at other output fields it was clear that there were 4 different sensor id numbers in the data: 0xc12c86ad, 0xc12c86cd, 0xc12a5716, and 0xc12c86dd. At this point I appended some functions to the bottom of an MQTT monitor relay for rtl_433 example python script that would display the data from each of these individually and made arbitrary assumptions about which tires were which.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># initial guesses</span>
+<span class="n">FL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86ad&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="n">test</span> <span class="n">FL</span> <span class="n">at</span> <span class="o">~</span><span class="mi">35</span> <span class="n">psi</span> <span class="nb">set</span> <span class="n">by</span> <span class="n">hand</span>
+<span class="n">FR</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86cd&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="n">test</span> <span class="n">FR</span> <span class="n">at</span> <span class="o">~</span><span class="mi">30</span> <span class="n">psi</span> <span class="nb">set</span> <span class="n">by</span> <span class="n">hand</span>
+<span class="n">BL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12a5716&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="n">test</span> <span class="n">BL</span> <span class="n">at</span> <span class="o">~</span><span class="mi">20</span> <span class="n">psi</span> <span class="nb">set</span> <span class="n">by</span> <span class="n">hand</span>
+<span class="n">BR</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86dd&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="n">test</span> <span class="n">BR</span> <span class="n">at</span> <span class="o">~</span><span class="mi">25</span> <span class="n">psi</span> <span class="nb">set</span> <span class="n">by</span> <span class="n">hand</span>
+</code></pre></div><p>After making initial guesses, and verifying my software was working, I had to properly map the tires to my vehicle. To do this I filled each of them to a different pressure, roughly 20, 25, 30, and 35 psi. I then drove in a circle till I had data at each of these pressures reported and remapped the tires to the correct positions in my software.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="c1"># final tire mapping</span>
+<span class="n">BR</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86ad&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 24.4 in test -&gt; BR</span>
+<span class="n">FR</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86cd&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 27.2 in test -&gt; FR</span>
+<span class="n">BL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12a5716&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 17.8 in test -&gt; BL</span>
+<span class="n">FL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86dd&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 30.8 in test -&gt; FL</span>
+</code></pre></div><p>I confirmed my mapping was correct by inflating/deflating the tires one at a time to 32 psi (32 instead of recommended 34 because it was ~0C outside) while receiving signals with my RTL-SDRv3 and this python script and watching the reports come in with one id only from the expected tire positions in sequential order as they were all restored to operating pressure. The result was a laptop-based TPMS readout for my car.</p>
+<p><img src="/p/rtl-sdr-mazda-cx-5-tpms/python_script_draft_output.png"
+	width="1509"
+	height="817"
+	srcset="/p/rtl-sdr-mazda-cx-5-tpms/python_script_draft_output_hu57a8b495f9a4e54a0a0a8c8e21657df2_2355807_480x0_resize_box_3.png 480w, /p/rtl-sdr-mazda-cx-5-tpms/python_script_draft_output_hu57a8b495f9a4e54a0a0a8c8e21657df2_2355807_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="Draft Python Script with 2nd Window Manual rtl_433 Command Producing Baseband Snippets as 8-bit IQ"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="184"
+		data-flex-basis="443px"
+	
+></p>
+<p>After getting everything working, I updated my python script to kick off the background rtl_433 process directly and now it runs in a single terminal window. I estimate that starting with my code below and updating the tire mapping ids for your Mazda, this capability could be replicated in under 30 minutes of calibration/setup time.</p>
+<details>
+  <summary>Source Code</summary>
+  <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="ch">#!/usr/bin/env python</span>
+
+<span class="s2">&#34;&#34;&#34;MQTT monitoring relay for rtl_433 communication.&#34;&#34;&#34;</span>
+
+<span class="c1"># This program listens on a UDP socket for syslog messages with a json</span>
+<span class="c1"># payload, and publishes the data via MQTT.  The broker connection is</span>
+<span class="c1"># kept open (and automatically reconnects on failure).  Each device</span>
+<span class="c1"># is mapped to its own topic,</span>
+
+<span class="c1"># Dependencies:</span>
+<span class="c1">#   Paho-MQTT; see https://pypi.python.org/pypi/paho-mqtt</span>
+
+<span class="c1">#   Optionally: PEP 3143 - Standard daemon process library</span>
+<span class="c1">#      (on 2.7,  pip install python-daemon)</span>
+
+<span class="c1"># To enable daemon support, uncomment the following line and adjust</span>
+<span class="c1"># run().  Note that print() is still used.</span>
+<span class="c1"># import daemon</span>
+
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">print_function</span>
+<span class="kn">from</span> <span class="nn">__future__</span> <span class="kn">import</span> <span class="n">with_statement</span>
+
+<span class="kn">import</span> <span class="nn">socket</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">paho.mqtt.client</span> <span class="k">as</span> <span class="nn">mqtt</span>
+
+<span class="kn">import</span> <span class="nn">sys</span>
+<span class="kn">import</span> <span class="nn">subprocess</span>
+
+<span class="c1"># Syslog socket configuration</span>
+<span class="n">UDP_IP</span> <span class="o">=</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+<span class="n">UDP_PORT</span> <span class="o">=</span> <span class="mi">1433</span>
+
+<span class="c1"># MQTT broker configuration</span>
+<span class="n">MQTT_HOST</span> <span class="o">=</span> <span class="s2">&#34;127.0.0.1&#34;</span>
+<span class="n">MQTT_PORT</span> <span class="o">=</span> <span class="mi">1883</span>
+<span class="n">MQTT_USERNAME</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">MQTT_PASSWORD</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">MQTT_TLS</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">MQTT_PREFIX</span> <span class="o">=</span> <span class="s2">&#34;sensor/rtl_433&#34;</span>
+
+<span class="k">def</span> <span class="nf">mqtt_connect</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">flags</span><span class="p">,</span> <span class="n">rc</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Handle MQTT connection callback.&#34;&#34;&#34;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;MQTT connected: &#34;</span> <span class="o">+</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">connack_string</span><span class="p">(</span><span class="n">rc</span><span class="p">))</span>
+
+
+<span class="k">def</span> <span class="nf">mqtt_disconnect</span><span class="p">(</span><span class="n">client</span><span class="p">,</span> <span class="n">userdata</span><span class="p">,</span> <span class="n">rc</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Handle MQTT disconnection callback.&#34;&#34;&#34;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;MQTT disconnected: &#34;</span> <span class="o">+</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">connack_string</span><span class="p">(</span><span class="n">rc</span><span class="p">))</span>
+
+
+<span class="c1"># Create listener for incoming json string packets.</span>
+<span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">IPPROTO_UDP</span><span class="p">)</span>
+<span class="n">sock</span><span class="o">.</span><span class="n">bind</span><span class="p">((</span><span class="n">UDP_IP</span><span class="p">,</span> <span class="n">UDP_PORT</span><span class="p">))</span>
+
+
+<span class="c1"># Map characters that will cause problems or be confusing in mqtt</span>
+<span class="c1"># topics.</span>
+<span class="k">def</span> <span class="nf">sanitize</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Sanitize a name for Graphite/MQTT use.&#34;&#34;&#34;</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">text</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34; &#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;/&#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;.&#34;</span><span class="p">,</span> <span class="s2">&#34;_&#34;</span><span class="p">)</span>
+            <span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&#34;&amp;&#34;</span><span class="p">,</span> <span class="s2">&#34;&#34;</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">parse_syslog</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+    <span class="s2">&#34;&#34;&#34;Try to extract the payload from a syslog line.&#34;&#34;&#34;</span>
+    <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&#34;ascii&#34;</span><span class="p">)</span>  <span class="c1"># also UTF-8 if BOM</span>
+    <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&#34;&lt;&#34;</span><span class="p">):</span>
+        <span class="c1"># Fields should be &#34;&lt;PRI&gt;VER&#34;, timestamp, hostname, command, pid, mid, sdata, payload.</span>
+        <span class="c1"># The payload might have spaces, so force split to stop after the sixth space.</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">fields</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># Hope that the line was just json without the syslog header.</span>
+        <span class="k">pass</span>
+    <span class="k">return</span> <span class="n">line</span>
+
+<span class="k">def</span> <span class="nf">rtl_433_probe</span><span class="p">():</span>
+    <span class="s2">&#34;&#34;&#34;Run a rtl_433 UDP listener.&#34;&#34;&#34;</span>
+
+    <span class="c1">## Connect to MQTT</span>
+    <span class="n">mqttc</span> <span class="o">=</span> <span class="n">mqtt</span><span class="o">.</span><span class="n">Client</span><span class="p">()</span>
+    <span class="n">mqttc</span><span class="o">.</span><span class="n">on_connect</span> <span class="o">=</span> <span class="n">mqtt_connect</span>
+    <span class="n">mqttc</span><span class="o">.</span><span class="n">on_disconnect</span> <span class="o">=</span> <span class="n">mqtt_disconnect</span>
+    <span class="k">if</span> <span class="n">MQTT_USERNAME</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mqttc</span><span class="o">.</span><span class="n">username_pw_set</span><span class="p">(</span><span class="n">MQTT_USERNAME</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">MQTT_PASSWORD</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">MQTT_TLS</span><span class="p">:</span>
+        <span class="n">mqttc</span><span class="o">.</span><span class="n">tls_set</span><span class="p">()</span>
+    <span class="n">mqttc</span><span class="o">.</span><span class="n">connect_async</span><span class="p">(</span><span class="n">MQTT_HOST</span><span class="p">,</span> <span class="n">MQTT_PORT</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+    <span class="n">mqttc</span><span class="o">.</span><span class="n">loop_start</span><span class="p">()</span>
+
+    <span class="c1">## Receive UDP datagrams, extract json, and publish.</span>
+    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+        <span class="n">line</span><span class="p">,</span> <span class="n">addr</span> <span class="o">=</span> <span class="n">sock</span><span class="o">.</span><span class="n">recvfrom</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">parse_syslog</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;model&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Abarth-124Spider&#39;</span><span class="p">:</span>
+                <span class="n">process_tires</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+            <span class="k">pass</span>
+
+<span class="c1"># initial guesses</span>
+<span class="c1">#FL = {&#39;id&#39;:&#39;c12c86ad&#39;,&#39;psi&#39;:0,&#39;temp&#39;:0} test FL at ~35 psi set by hand</span>
+<span class="c1">#FR = {&#39;id&#39;:&#39;c12c86cd&#39;,&#39;psi&#39;:0,&#39;temp&#39;:0} test FR at ~30 psi set by hand</span>
+<span class="c1">#BL = {&#39;id&#39;:&#39;c12a5716&#39;,&#39;psi&#39;:0,&#39;temp&#39;:0} test BL at ~20 psi set by hand</span>
+<span class="c1">#BR = {&#39;id&#39;:&#39;c12c86dd&#39;,&#39;psi&#39;:0,&#39;temp&#39;:0} test BR at ~25 psi set by hand</span>
+
+<span class="c1"># final tire mapping</span>
+<span class="n">BR</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86ad&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 24.4 in test -&gt; BR</span>
+<span class="n">FR</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86cd&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 27.2 in test -&gt; FR</span>
+<span class="n">BL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12a5716&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 17.8 in test -&gt; BL</span>
+<span class="n">FL</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;id&#39;</span><span class="p">:</span><span class="s1">&#39;c12c86dd&#39;</span><span class="p">,</span><span class="s1">&#39;psi&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">,</span><span class="s1">&#39;temp&#39;</span><span class="p">:</span><span class="mi">0</span><span class="p">}</span> <span class="c1"># tpms measured 30.8 in test -&gt; FL</span>
+
+<span class="k">def</span> <span class="nf">process_tires</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">FL</span><span class="p">,</span> <span class="n">FR</span><span class="p">,</span> <span class="n">BL</span><span class="p">,</span> <span class="n">BR</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">FL</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]):</span>
+        <span class="n">FL</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pressure_kPa&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">.1450</span>
+        <span class="n">FL</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;temperature_C&#39;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">FR</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]):</span>
+        <span class="n">FR</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pressure_kPa&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">.1450</span>
+        <span class="n">FR</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;temperature_C&#39;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">BL</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]):</span>
+        <span class="n">BL</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pressure_kPa&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">.1450</span>
+        <span class="n">BL</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;temperature_C&#39;</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">BR</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]):</span>
+        <span class="n">BR</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;pressure_kPa&#39;</span><span class="p">]</span><span class="o">*</span><span class="mf">.1450</span>
+        <span class="n">BR</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;temperature_C&#39;</span><span class="p">]</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Front Left:&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">{:2.1f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FL</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]),</span> <span class="s2">&#34;PSI /&#34;</span><span class="p">,</span> <span class="n">FL</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span> <span class="s2">&#34;C&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span><span class="s2">&#34;Front Right:&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">{:2.1f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">FR</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]),</span> <span class="s2">&#34;PSI /&#34;</span><span class="p">,</span> <span class="n">FR</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span> <span class="s2">&#34;C&#34;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&#34; Back Left:&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">{:2.1f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">BL</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]),</span> <span class="s2">&#34;PSI /&#34;</span><span class="p">,</span> <span class="n">BL</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span> <span class="s2">&#34;C&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="se">\t</span><span class="s2">&#34;</span><span class="p">,</span> <span class="s2">&#34; Back Right:&#34;</span><span class="p">,</span> <span class="s2">&#34;</span><span class="si">{:2.1f}</span><span class="s2">&#34;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">BR</span><span class="p">[</span><span class="s1">&#39;psi&#39;</span><span class="p">]),</span> <span class="s2">&#34;PSI /&#34;</span><span class="p">,</span> <span class="n">BR</span><span class="p">[</span><span class="s1">&#39;temp&#39;</span><span class="p">],</span> <span class="s2">&#34;C&#34;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;rtl_433 -R 156 -r &#39;</span><span class="o">+</span> <span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span><span class="s1">&#39; -F syslog:127.0.0.1:1433&#39;</span><span class="p">],</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">subprocess</span><span class="o">.</span><span class="n">Popen</span><span class="p">([</span><span class="s1">&#39;rtl_433 -f 315000000 -R 156 -F syslog:127.0.0.1:1433&#39;</span><span class="p">],</span><span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">DEVNULL</span><span class="p">)</span>
+    <span class="n">rtl_433_probe</span><span class="p">()</span>
+</code></pre></div>
+</details>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2021 - 
+        
+        2023 Robert Research Radios
+    </section>
+    
+    <section class="powerby">
+        
+            Robert's Research & Radios LLC <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

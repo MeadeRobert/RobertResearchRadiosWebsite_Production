@@ -1,0 +1,197 @@
++++
+author = "Robert Meade, KB3WFQ"
+title = "RTL-SDR Mazda CX-5 TPMS"
+date = "2023-02-04"
+description = "Using RTL-433 and Python to Create a 4x Individual Tire TPMS Readout"
+tags = []
++++
+
+My 2022 CX-5 had the low tire pressure light turn on the other day, and my first response was to start mashing the steering wheel info button to see which tire was low on pressure. Puzzled when I did not find a readout of the tire pressures on the dash, I checked the paper and digital manuals for more information. After reading these and investigating other sources, I found that while Mazda uses direct TPMS sensors that transmit pressure and temperature data with accompanying unique sensor ids to the car's computer via RF signals, the car does not a have a system to interpret those readings individually. The year is the current year, and finding this wholly unacceptable, I set out to build myself a TPMS receiver that could interpret these readings for each tire separately immediately after I repaired the hole created by a nail and reinflated the tire with low pressure.
+
+![Low Tire Pressure Display](Low_Tire_Pressure_Light.PNG)
+
+[RTL-433](https://github.com/merbanan/rtl_433) (rtl_433) is an open source software project written in C that uses RTL-SDR type devices to demodulate common electronic device pulse signals on ISM (Part 18) or Part 15 bands to include 315 MHz, 433 MHZ, 868 MHz, 915 MHz, and more. The software has the capability to do pulse analysis with minimized data descriptors and to provide baseband snippets of captured pulses for further analysis. If I was going to have to write a decoder, it should be an extension to this already huge project that sports ~200 common pulse signal decoders, and the existing analysis tools provided by rtl_433 would prove very helpful in this task should it be necessary.
+
+My first step in thd process to build my TPMS readout was to just run the rtl_433 command with my car off and in my garage to see if I would pick up any signals from the car's tire sensors, but I received no signals in doing this. I had found another article on this subject of [reverse engineering Mazda TPMS sensors](https://xplorenlearn.wordpress.com/2019/01/21/reverse-engineering-tpms-protocol-mazda-5/) which all but confirmed that in the US these would be 315 MHz signals in 70kHz BW FSK using standard manchester encoding, so I wanted to look at the baseband data being received by my RTL-SDRv3 to see if I was observing anything matching that description. When I ran gqrx or sdrpp and observed the waterfall, all I saw was ~200kHz BW BFSK signals from my car's fob interogator system and the responses from the fob in my pocket. 
+
+After doing some more reading online, I learned that TPMS sensors in your car's tires are powered by small batteries that have to last for several years. To save power, they only transmit when large changes in tire pressure are observed or when the tires are spinning, that is when the sensor is accelerating. I repeated my initial experiment with rtl_433 again, this time collecting signals while I was driving the car, and I observed several similar TPMS protocol decoders reporting back data.
+
+![RTL-433 Output when Driving](rtl_433_output.PNG)
+
+Now that I had data from rtl_433, I looked for the decoder data output that most accurately reported data about my tires. It seemed the one giving me readings of roughly 210-220 kPa and temps around 0C (it's cold here in DM79 right now) was the most reasonable; this was the Abarth-124Spider decoder (-R 156) already built for rtl_433. Looking at other output fields it was clear that there were 4 different sensor id numbers in the data: 0xc12c86ad, 0xc12c86cd, 0xc12a5716, and 0xc12c86dd. At this point I appended some functions to the bottom of an MQTT monitor relay for rtl_433 example python script that would display the data from each of these individually and made arbitrary assumptions about which tires were which.
+
+```python
+# initial guesses
+FL = {'id':'c12c86ad','psi':0,'temp':0} test FL at ~35 psi set by hand
+FR = {'id':'c12c86cd','psi':0,'temp':0} test FR at ~30 psi set by hand
+BL = {'id':'c12a5716','psi':0,'temp':0} test BL at ~20 psi set by hand
+BR = {'id':'c12c86dd','psi':0,'temp':0} test BR at ~25 psi set by hand
+```
+
+After making initial guesses, and verifying my software was working, I had to properly map the tires to my vehicle. To do this I filled each of them to a different pressure, roughly 20, 25, 30, and 35 psi. I then drove in a circle till I had data at each of these pressures reported and remapped the tires to the correct positions in my software.
+
+```python
+# final tire mapping
+BR = {'id':'c12c86ad','psi':0,'temp':0} # tpms measured 24.4 in test -> BR
+FR = {'id':'c12c86cd','psi':0,'temp':0} # tpms measured 27.2 in test -> FR
+BL = {'id':'c12a5716','psi':0,'temp':0} # tpms measured 17.8 in test -> BL
+FL = {'id':'c12c86dd','psi':0,'temp':0} # tpms measured 30.8 in test -> FL
+```
+
+I confirmed my mapping was correct by inflating/deflating the tires to 32 psi (32 instead of recommended 34 because it was ~0C outside) while receiving signals with my RTL-SDRv3 and this python script and watching the reports come in from the expected tire position as they were all restored to operating pressure individually. The result was a laptop-based TPMS readout for my car. I estimate with the knowledge in this article, one could replicate this capability in 30 minutes using the script below and a machine running rtl_433 with any RTL-SDR dongle.
+
+![Draft Python Script with 2nd Window Manual rtl_433 Command Producing Baseband Snippets as 8-bit IQ](python_script_draft_output.PNG)
+
+After getting everything working, I updated my python script to kick off the background rtl_433 process directly and now it runs in a single terminal window. I estimate that starting with my code below and updating 
+
+{{< details "Source Code" >}}
+```python
+#!/usr/bin/env python
+
+"""MQTT monitoring relay for rtl_433 communication."""
+
+# This program listens on a UDP socket for syslog messages with a json
+# payload, and publishes the data via MQTT.  The broker connection is
+# kept open (and automatically reconnects on failure).  Each device
+# is mapped to its own topic,
+
+# Dependencies:
+#   Paho-MQTT; see https://pypi.python.org/pypi/paho-mqtt
+
+#   Optionally: PEP 3143 - Standard daemon process library
+#      (on 2.7,  pip install python-daemon)
+
+# To enable daemon support, uncomment the following line and adjust
+# run().  Note that print() is still used.
+# import daemon
+
+from __future__ import print_function
+from __future__ import with_statement
+
+import socket
+import json
+import paho.mqtt.client as mqtt
+
+import sys
+import subprocess
+
+# Syslog socket configuration
+UDP_IP = "127.0.0.1"
+UDP_PORT = 1433
+
+# MQTT broker configuration
+MQTT_HOST = "127.0.0.1"
+MQTT_PORT = 1883
+MQTT_USERNAME = None
+MQTT_PASSWORD = None
+MQTT_TLS = False
+MQTT_PREFIX = "sensor/rtl_433"
+
+def mqtt_connect(client, userdata, flags, rc):
+    """Handle MQTT connection callback."""
+    print("MQTT connected: " + mqtt.connack_string(rc))
+
+
+def mqtt_disconnect(client, userdata, rc):
+    """Handle MQTT disconnection callback."""
+    print("MQTT disconnected: " + mqtt.connack_string(rc))
+
+
+# Create listener for incoming json string packets.
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP)
+sock.bind((UDP_IP, UDP_PORT))
+
+
+# Map characters that will cause problems or be confusing in mqtt
+# topics.
+def sanitize(text):
+    """Sanitize a name for Graphite/MQTT use."""
+    return (text
+            .replace(" ", "_")
+            .replace("/", "_")
+            .replace(".", "_")
+            .replace("&", ""))
+
+def parse_syslog(line):
+    """Try to extract the payload from a syslog line."""
+    line = line.decode("ascii")  # also UTF-8 if BOM
+    if line.startswith("<"):
+        # Fields should be "<PRI>VER", timestamp, hostname, command, pid, mid, sdata, payload.
+        # The payload might have spaces, so force split to stop after the sixth space.
+        fields = line.split(None, 7)
+        line = fields[-1]
+    else:
+        # Hope that the line was just json without the syslog header.
+        pass
+    return line
+
+def rtl_433_probe():
+    """Run a rtl_433 UDP listener."""
+
+    ## Connect to MQTT
+    mqttc = mqtt.Client()
+    mqttc.on_connect = mqtt_connect
+    mqttc.on_disconnect = mqtt_disconnect
+    if MQTT_USERNAME != None:
+        mqttc.username_pw_set(MQTT_USERNAME, password=MQTT_PASSWORD)
+    if MQTT_TLS:
+        mqttc.tls_set()
+    mqttc.connect_async(MQTT_HOST, MQTT_PORT, 60)
+    mqttc.loop_start()
+
+    ## Receive UDP datagrams, extract json, and publish.
+    while True:
+        line, addr = sock.recvfrom(1024)
+        try:
+            line = parse_syslog(line)
+            data = json.loads(line)
+
+            if data['model'] == 'Abarth-124Spider':
+                process_tires(data)
+
+        except ValueError:
+            pass
+
+# initial guesses
+#FL = {'id':'c12c86ad','psi':0,'temp':0} test FL at ~35 psi set by hand
+#FR = {'id':'c12c86cd','psi':0,'temp':0} test FR at ~30 psi set by hand
+#BL = {'id':'c12a5716','psi':0,'temp':0} test BL at ~20 psi set by hand
+#BR = {'id':'c12c86dd','psi':0,'temp':0} test BR at ~25 psi set by hand
+
+# final tire mapping
+BR = {'id':'c12c86ad','psi':0,'temp':0} # tpms measured 24.4 in test -> BR
+FR = {'id':'c12c86cd','psi':0,'temp':0} # tpms measured 27.2 in test -> FR
+BL = {'id':'c12a5716','psi':0,'temp':0} # tpms measured 17.8 in test -> BL
+FL = {'id':'c12c86dd','psi':0,'temp':0} # tpms measured 30.8 in test -> FL
+
+def process_tires(data):
+    global FL, FR, BL, BR
+
+    print(data)
+
+    if (data['id'] == FL['id']):
+        FL['psi'] = data['pressure_kPa']*.1450
+        FL['temp'] = data['temperature_C']
+    elif (data['id'] == FR['id']):
+        FR['psi'] = data['pressure_kPa']*.1450
+        FR['temp'] = data['temperature_C']
+    elif (data['id'] == BL['id']):
+        BL['psi'] = data['pressure_kPa']*.1450
+        BL['temp'] = data['temperature_C']
+    elif (data['id'] == BR['id']):
+        BR['psi'] = data['pressure_kPa']*.1450
+        BR['temp'] = data['temperature_C']
+
+    print("Front Left:", "{:2.1f}".format(FL['psi']), "PSI /", FL['temp'], "C", "\t","Front Right:", "{:2.1f}".format(FR['psi']), "PSI /", FR['temp'], "C")
+    print(" Back Left:", "{:2.1f}".format(BL['psi']), "PSI /", BL['temp'], "C", "\t", " Back Right:", "{:2.1f}".format(BR['psi']), "PSI /", BR['temp'], "C")
+
+if __name__ == "__main__":
+    if len(sys.argv) > 1:
+        print(sys.argv[1])
+        subprocess.Popen(['rtl_433 -R 156 -r '+ sys.argv[1] +' -F syslog:127.0.0.1:1433'],shell=True,stdout=subprocess.DEVNULL)
+    else:
+        subprocess.Popen(['rtl_433 -f 315000000 -R 156 -F syslog:127.0.0.1:1433'],shell=True,stdout=subprocess.DEVNULL)
+    rtl_433_probe()
+```
+{{< /details >}}
+
