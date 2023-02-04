@@ -192,16 +192,16 @@
     <section class="article-content">
     
     
-    <p>In designing my Amateur Radio Satcom station for V/U Satcom using omnidirectional antennas, I toyed with the idea of using relay-based TX/RX switches with a 3dB power divider to supply a signal to a monitoring SDR without the filters of the IC-9700 in the receive chain. This was an alternative to using the PTRX-9700 Pandapter as a signal cloning device, and it had the added benefit of being able to use more of the M2 Antennas Eggbeaters’ frequency ranges (The Full 136-148MHz and 400-470MHz advertised). Unfortunately, this system configuration resulted in insufficient SNR for decoding much telemetry or other signals in the 146/433 MHz Amateur Radio V/U Satcom Bands wihtout acquiring a mast-mounted pre-amp. Despite this, my quest to explore this technical solution in a world filled with covid-driven part scarcity led to a useful development regarding a common MFJ product.</p>
-<p>I fell into the same trap as K1GMM and purchased some MFJ-1708B RF Sense TR Switches thinking they were identical in function to the 3 MFJ-1708B RF Sense SDR Receiver TR Switches. The Switches I bought used a common circuit board design with the SDR model switches, but the non-SDR model did not split the RF receive output. Rather it only served it to only the “REC” output. MFJ, like Ten-Tec, provides schematics for many of their products, so I set out to see if I might easily convert this non-SDR model switch to act as the SDR one.</p>
+    <p>While designing my Amateur Radio V/U satellite communications station using omnidirectional antennas, I toyed with the idea of relay-based TX/RX switches with integrated 3dB power dividers to supply signals to a monitoring SDR without the filters of the IC-9700 in the receive chain. This thought was an alternative to using the PTRX-9700 Pandapter as a signal cloning device, and it had the added benefit of being able to use more of the M2 Antennas Eggbeaters’ frequency ranges (the full 136-148 MHz and 400-470 MHz advertised). Unfortunately, this system configuration resulted in insufficient SNR for decoding much telemetry or other signals in the 146/433 MHz Amateur Radio V/U Satcom Bands wihtout adding a mast-mounted pre-amp. Despite this, my quest to explore this technical solution in a world filled with covid-driven part scarcity led to a useful development regarding a common MFJ product.</p>
+<p>I fell into the same trap as K1GMM and purchased some MFJ-1708B RF Sense TR Switches thinking they were identical in function to the MFJ-1708B RF Sense SDR Receiver TR Switches. The Switches I bought used a common circuit board design with the SDR model switches, but the non-SDR model did not split the RF receive output; rather, it only served it to the “REC” output. MFJ, like Ten-Tec, provides schematics for many of their products, so I set out to see if I might easily convert this non-SDR model switch to perform as the SDR one.</p>
 <p>While the physical circuit boards used for the various models of MFJ-1708B devices are all the same, the populated portions of the layout differ in 4 ways:</p>
 <ol>
 <li>R1 is NOT present on SDR Version</li>
 <li>JP3 is disconnected/NOT present on SDR Version</li>
 <li>SMD Center-Tap Transformer TR1 for the -3dB RF Splitter is present on SDR Version</li>
-<li>100 Ohm Resistor shorts end-point leads of TR1 on SDR Version</li>
+<li>A 100 Ohm Resistor shorts the end-point leads of TR1 on SDR Version</li>
 </ol>
-<p>The differences can be shown schematically between the 2 marked-up schematic images below:</p>
+<p>The differences are shown in red markup below:</p>
 <p><img src="/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-receive-power-splitting-model-conversion/1708B_SDR.jpg"
 	width="1719"
 	height="1124"
@@ -240,8 +240,7 @@
 <p>All of the components required to convert the non-SDR version to the SDR version are likely to be found lying around a typical hobbyist electronics lab except the power splitter transformer, although it&rsquo;s not hard to find something workable for &lt; $5 a piece on DigiKey, Mouser, etc. I measured by hand using a caliper the footprint for the power splitter on the board and sourced a MAPD-011039 2-Way Power Divider capable of covering 1.218MHz to 5 GHz with an insertion loss of 1.2 dB in a 0.163&quot; L x 0.167&quot; W x 0.142&quot; H (4.15mm x 4.25mm x 3.60mm) 6-SMD, No Lead package for $3.58/pc.
 (<a class="link" href="https://www.digikey.com/en/products/detail/macom-technology-solutions/MAPD-011039/12757323"  target="_blank" rel="noopener"
     >MAPD-011039</a>)</p>
-<p>Performing these 4 changes shown in the youtube link below successfully made the MFJ-1708B units I bought function as the SDR version RF receive splitting models.</p>
-<p>** insert youtube link here **</p>
+<p>Performing the 4 changes shown in the schematics above yields a functional converted RF switch.</p>
 
 </section>
 
@@ -282,7 +281,7 @@
         
             2021 - 
         
-        2022 Robert Research Radios
+        2023 Robert Research Radios
     </section>
     
     <section class="powerby">
