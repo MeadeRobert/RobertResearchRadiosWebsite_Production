@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC'><title>Posts</title>
+    <head>
+	<meta name="generator" content="Hugo 0.88.1" /><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC'><title>Robert Research Radios</title>
 
-<link rel='canonical' href='https://robertresearchradios.com/post/'>
+<link rel='canonical' href='https://robertresearchradios.com/'>
 
-<link rel="stylesheet" href="/scss/style.min.d9e0562edde3d2bdf9d3d81365095a29d062ddaaa5d671f22168e57dfdb18b4f.css"><meta property='og:title' content='Posts'>
+<link rel="stylesheet" href="/scss/style.min.d9e0562edde3d2bdf9d3d81365095a29d062ddaaa5d671f22168e57dfdb18b4f.css"><meta property='og:title' content='Robert Research Radios'>
 <meta property='og:description' content='Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC'>
-<meta property='og:url' content='https://robertresearchradios.com/post/'>
+<meta property='og:url' content='https://robertresearchradios.com/'>
 <meta property='og:site_name' content='Robert Research Radios'>
 <meta property='og:type' content='website'><meta property='og:updated_time' content=' 2023-02-04T00:00:00&#43;00:00 '/>
-<meta name="twitter:title" content="Posts">
-<meta name="twitter:description" content="Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC"><link rel="alternate" type="application/rss&#43;xml" href="https://robertresearchradios.com/post/index.xml">
+<meta name="twitter:title" content="Robert Research Radios">
+<meta name="twitter:description" content="Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC"><link rel="alternate" type="application/rss&#43;xml" href="https://robertresearchradios.com/index.xml">
     </head>
     <body class="">
     <script>
@@ -90,28 +91,6 @@
         
 
         <li >
-            <a href='/kiwi-sdr' target="_blank">
-                
-                
-                    
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>Kiwi-SDR</span>
-            </a>
-        </li>
-        
-        
-
-        <li >
             <a href='/shop' target="_blank">
                 
                 
@@ -120,9 +99,22 @@
                 
                     <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Cart</title><circle cx="176" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256"/><path d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
                 
-                <span>Etsy Shop</span>
+                <span>Shop</span>
             </a>
         </li>
+		
+        <li >
+            <a href='/kiwi-sdr' target="_blank">
+                
+                
+                    
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Cart</title><circle cx="176" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256"/><path d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+                
+                <span>Kiwi-SDR (FN20gf)</span>
+            </a>
+        </li>		
         
 
         <div class="menu-bottom-section">
@@ -152,44 +144,129 @@
     </ol>
 </aside>
 <main class="main full-width">
-    <header>
-        <h3 class="section-title">
-            
-                Section
-            
-        </h3>
-
-        <div class="section-card">
-            <div class="section-details">
-                <h3 class="section-count">2 pages</h3>
-                <h1 class="section-term">Posts</h1>
-                
-            </div>
-        </div>
-    </header>
     
-    <section class="article-list--compact">
+    
+    
+    
+
+    <section class="article-list">
         
-            <article>
-    <a href="/p/rtl-sdr-mazda-cx-5-tpms/">
-        <div class="article-details">
-            <h2 class="article-title">RTL-SDR Mazda CX-5 TPMS</h2>
-            <footer class="article-time">
-                <time datetime='2023-02-04T00:00:00Z'>Feb 04, 2023</time>
-            </footer>
-        </div>
-    </a>
+            
+<article class="">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/rtl-sdr-mazda-cx-5-tpms/">RTL-SDR Mazda CX-5 TPMS</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Using RTL-433 and Python to Create a 4x Individual Tire TPMS Readout
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Feb 04, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    7 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
 </article>
         
-            <article>
-    <a href="/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/">
-        <div class="article-details">
-            <h2 class="article-title">MFJ-1708B RF Sense TR Switch non-SDR to SDR Model Conversion</h2>
-            <footer class="article-time">
-                <time datetime='2022-04-28T00:00:00Z'>Apr 28, 2022</time>
-            </footer>
-        </div>
-    </a>
+            
+<article class="">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/mfj-1708b-rf-sense-tr-switch-non-sdr-to-sdr-model-conversion/">MFJ-1708B RF Sense TR Switch non-SDR to SDR Model Conversion</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Changing Board Component Population to Acquire Hardware During a Shortage
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Apr 28, 2022</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
 </article>
         
     </section>
@@ -209,7 +286,6 @@
         Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
     </section>
 </footer>
-
 
             </main>
     
