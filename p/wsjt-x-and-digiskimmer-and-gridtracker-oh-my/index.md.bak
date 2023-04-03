@@ -1,0 +1,79 @@
++++
+author = "Robert Meade, KB3WFQ"
+title = "WSJT-X and DigiSkimmer and Gridtracker Oh My!"
+date = "2023-03-26"
+description = "A Multicast Data Sharing Party for FT8"
+tags = []
++++
+
+```
+Friend: Hey what band are you on for FT8?
+Me: HF.
+Friend: What? That's like 8 Bands.
+Me: Yes.
+```
+
+![GridTracker with 8 Bands of FT8 Decodes Input via Multicast Network](Live_MultiBand_Sunday_Evening_2300_MDT.PNG)
+
+# Intro
+
+One day I read a reddit comment where someone mentioned using multiple instances of WSJT-X with one instance of GridTracker to operate FT8 on 2 bands at the same time, seeing data from both instances simultaneously in GridTracker. This got me thinking about my KiwiSDR which I had listening to FT8 on 8 HF bands and simultaneously reporting all the decodes to PSKReporter.info using DigiSkimmer. I wondered if I could view that decoded data locally and instantly in GridTracker instead of with a processing delay from PSKReporter.info. This could help me attain the Worked All States (WAS) and other awards from eQSL and LOTW faster than if I just listened for CQs on a single band since I could set up missing grid or missing state alerts in GridTracker and get them immediately on my desktop as reports come in. Then I could respond to those CQs of interest to get another missing state or grid. 
+
+I don't like the waiting part of fishing and this was the perfect way to combine practical programming and Ham radio to lessen the chance involved in pursuing these awards by just calling CQ or being limited in my signals consumption and awareness capacity while trying to respond to others' CQs. This article is the culmination of a few months of casual experimentation and debugging and discusses how I was able to connect DigiSkimmer to GridTracker to receive 8 bands of HF at the same time, enabling DX Chasing and more effective multi-band award hunting by rapid band hopping operations.
+
+# Background
+
+The [KiwiSDR](http://kiwisdr.com/) is an FPGA-based beaglebone cape SDR which provides a user web interface using javascript and websockets. The program comes with built in web demodulators for common modes spanning SSB and WFM to Digital Radio Mondiale (DRM) and more. The web interface software is the baseline that spawned the still supported (now by a different author) [OpenWebRX](https://www.openwebrx.de/) project.
+
+![http://kiwisdr.com/ks/proj.image.385px.jpg](http://kiwisdr.com/ks/proj.image.385px.jpg)
+
+In its "more channels" mode, KiwiSDR can serve 8 demodulated audio streams over websockets to 8 separate clients. Lazywalker's DigiSkimmer takes advantage of this capabiltiy to provide WSJT-X mode spots to PSKReporter or WSPR spots to WSPRNet by dynamically tasking these 8 audio streams to different WSJT mode signal allocations. Normally, the software simply connects to the audio channel websockets on KiwiSDR, pipes audio to WSJT-X command line decoders, parses the output decoded messages, and uploads reports to PSKReporter or WSPRNet. DigiSkimmer has a configurable schedule to switch bands and modes at certain times of day, but for the purposes of this project, I'm simply covering FT8 on the 80, 40, 30, 20, 17, 15, 12, and 10 meter bands 24/7. Out of the box, this allows me to use DigiSkimmer to provide total situational awareness for amateur radio FT8 on all HF bands, all at the same time.
+
+Unfortunately, with the out of the box capabilties of DigiSkimmer, received signal reports are only viewable on the console in a difficult to interpret format (raw WSJT-X decode messages), or by querying the web services the reports are served to by API or web interface (e.g. PSKReporter's PSK Map). For the past year, PSKReporter forums have been full of complaints about processing delay which has at times exceeded several hours during contests. PSKReporter's view is not instant, even when working properly, and WSPRNet doesn't really support reports for modes other than WSPR. Also, neither of these services would appreciate the sheer amount of user queries made to get data on 15 second or faster intervals even if they could provide it at that rate. I'm sure my client would be banned in short order for denial-of-service attack like behavior. 
+
+Since what I want for operating FT8 with all-band HF receive while I'm not transmitting is instantly viewable signal reports to enable DX chasing by rapid band hopping, I have to find another solution. If I could just feed signal reports from DigiSkimmer to some local software for for viewing reports, mapping them, and alerting me of interesting signals, I'd have the capability I'm looking for. This is where GridTracker comes in.
+
+GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but it's closed source. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker's views. WSJT-X is none the wiser that i'm using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.
+
+![](Network_Topology.PNG)
+
+# Software Implementation
+
+The first step in design implementation was either to reverse engineer the packets being sent by WSJT-X using WireShark, read the C++ source code and decipher what packets were being sent, or to find a FOSS library that did most of this work for me. I ended up forking bmo's py-wsjtx library and used the C++ WSJT-X source code and WireShark in tandem to help construct the packets the FOSS library did not provide. The py-wsjtx library was only written to receive some WSJT-X packets and decomm them, not build packets to fake heartbeats, statuses, and reports. I added these packet builders into the codebase, and I was off to the races.
+
+After building a library sufficient to impersonate WSJT-X over UDP, I had to plan out the interfaces between my various software and hardware. The below figures summarize what data will flow between hardware and software, but the TLDR is that DigiSkimmer will be provide decode packets to GridTracker and pay attention to status packets from real WSJT-X instances to not provide duplicate reports to GridTracker. GridTracker provides visualization of data and limited commanding to real WSJT-X instances for transmit operations.
+
+![](Hardware_Messages.PNG)
+
+![](Software_Messages.PNG)
+
+After architecting what was to be implemented for software/hardware interfaces, the next step was to add code to the wsjt decoding function in DigiSkimmer which would send UDP packets out over a multicast UDP socket to GridTracker. I created an object in DigiSkimmer's codebase to be a thread safe shared UDP socket manager and created code to add packets to a broadcast queue in the decode function of DigiSkimmer. I thought I might be done at this point, but I did want to avoid collisions between decode packets of my real WSJT-X instance and my DigiSkimmer imposters, so there was more work to be done.
+
+Duplicate packets received by GridTracker limited my "point and click" operations whereby clicking on a CQ in the Call Roster of GridTracker automatically replies to the CQ in WSJT-X. Since the fake WSJT-X instances have no transmitters to control when given a reply command and GridTracker will only send a command back to the source WSJT-X instance for a report, I need any packets from real WSJT-X instances connected to radio transceivers to take precedence over ones reported from KiwiSDR via DigiSkimmer. 
+
+To mitigate report collisions, I added code in the UDP socket manager class to listen for status packets from WSJT-X and provide a dictionary of excluded bands/modes for the broadcast queue entries in the DigiSkimmer decode function. I then had the DigiSkimmer decode method UDP broadcasting code check this list and not send reports that would be on the same band/mode as real WSJT-X instacnes in the exclusion list. 
+
+After writing code to avoid packet collisions and broadcast the decoded WSJT-X packets I was mostly done, but there are a few more quirks I want to cover in this article for posterity's sake.
+
+For a long time, I was having a problem with the software where a few of the listener threads would stop working after a while, and I thought it might be multithreading related since the audio listeners implemented by DigiSkimmer run as separate python Thread objects. In reality, I just had the schedule for 24/7 written wrong in the python config file. It's supposed to be a * for a continuous schedule, not something like 0:00-23:59, which was causing only 4 threads to resume on the midnight rollover for some reason.
+
+I also had to make sure my UDP socket manager class was emptying the socket of all real WSJT-X packets and DigiSkimmer reports and not just reading back reports I was sending from DigiSkimmer at a rate which didn't empty the socket. Originally, the reports would fill up the socket faster than I was reading from it, so I wouldn't see updated status from real WSJT-X instances, resulting in a very outdated exclusion list for report broadcasting after DigiSkimmer had been running for some time.
+
+At the time of writing, I also have not implemented a UDP log packet object in the py-wsjtx library fork I've been using. This is now set to just throw warnings in the DigiSkimmer logs as DigiSkimmer has no use for the logged QSOs anyway and the warning messages are largely harmless.
+
+# How to Use/Deploy for your Radio Shack
+
+If you happen to have a ~~unicorn~~ KiwiSDR and you want to run this software yourself, you can download my forked DigiSkimmer from GitHub and also clone my forked py-wsjtx git submodule dependencies into it and run it on your own multicast network. Please note I'm using a simlink for the location the py-wsjtx library, so it might not work properly on windows without some modification. As long as your multicast network is routable and you configure a valid settings.py file for DigiSkimmer the software should work in other environments. Links to my 2 forked and modified repos can be found below. I hope to catch you on the air, and remember, with great power comes great responsibilty. Please still call CQ!
+
+- https://github.com/MeadeRobert/DigiSkimmer
+
+- https://github.com/MeadeRobert/py-wsjtx/
+
+73 DE KB3WFQ
+
+![](Meme_Chad_Yes.PNG)
+
+
+
+
+

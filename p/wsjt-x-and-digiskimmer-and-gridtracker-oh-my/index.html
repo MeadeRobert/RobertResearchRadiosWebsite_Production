@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content='A Multicast Data Sharing Party for FT8'><title>WSJT-X and DigiSkimmer and Gridtracker Oh My!</title>
+
+<link rel='canonical' href='https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/'>
+
+<link rel="stylesheet" href="/scss/style.min.d9e0562edde3d2bdf9d3d81365095a29d062ddaaa5d671f22168e57dfdb18b4f.css"><meta property='og:title' content='WSJT-X and DigiSkimmer and Gridtracker Oh My!'>
+<meta property='og:description' content='A Multicast Data Sharing Party for FT8'>
+<meta property='og:url' content='https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/'>
+<meta property='og:site_name' content='Robert Research Radios'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:published_time' content='2023-03-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2023-03-26T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="WSJT-X and DigiSkimmer and Gridtracker Oh My!">
+<meta name="twitter:description" content="A Multicast Data Sharing Party for FT8">
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    <img src="/img/avatar.png" width="300" height="300" class="site-logo" loading="lazy" alt="Avatar">
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Robert Research Radios</a></h1>
+            <h2 class="site-description">Website &amp; Blog for Robert&#39;s Research &amp; Radios LLC</h2>
+        </div>
+    </header><ol class="menu" id="main-menu">
+        
+        
+        
+
+        <li >
+            <a href='/' >
+                
+                
+                    
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/kiwi-sdr' target="_blank">
+                
+                
+                    
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Kiwi-SDR</span>
+            </a>
+        </li>
+        
+        
+
+        <li >
+            <a href='/shop' target="_blank">
+                
+                
+                    
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="ionicon" viewBox="0 0 512 512"><title>Cart</title><circle cx="176" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><circle cx="400" cy="416" r="16" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32" d="M48 80h64l48 272h256"/><path d="M160 288h249.44a8 8 0 007.85-6.43l28.8-144a8 8 0 00-7.85-9.57H128" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="32"/></svg>
+                
+                <span>Etsy Shop</span>
+            </a>
+        </li>
+        
+
+        <div class="menu-bottom-section">
+            
+            
+                <li id="dark-mode-toggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                    <span>Dark Mode</span>
+                </li>
+            
+        </div>
+    </ol>
+</aside>
+<main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/">WSJT-X and DigiSkimmer and Gridtracker Oh My!</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            A Multicast Data Sharing Party for FT8
+        </h3>
+        
+    </div>
+
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">Mar 26, 2023</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    8 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+</header>
+
+    <section class="article-content">
+    
+    
+    <pre tabindex="0"><code>Friend: Hey what band are you on for FT8?
+Me: HF.
+Friend: What? That's like 8 Bands.
+Me: Yes.
+</code></pre><p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Live_MultiBand_Sunday_Evening_2300_MDT.png"
+	width="2491"
+	height="1371"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Live_MultiBand_Sunday_Evening_2300_MDT_hu786fd126288e32edb15fea75e2c4a88e_1707273_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Live_MultiBand_Sunday_Evening_2300_MDT_hu786fd126288e32edb15fea75e2c4a88e_1707273_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+		alt="GridTracker with 8 Bands of FT8 Decodes Input via Multicast Network"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="181"
+		data-flex-basis="436px"
+	
+></p>
+<h1 id="intro">Intro</h1>
+<p>One day I read a reddit comment where someone mentioned using multiple instances of WSJT-X with one instance of GridTracker to operate FT8 on 2 bands at the same time, seeing data from both instances simultaneously in GridTracker. This got me thinking about my KiwiSDR which I had listening to FT8 on 8 HF bands and simultaneously reporting all the decodes to PSKReporter.info using DigiSkimmer. I wondered if I could view that decoded data locally and instantly in GridTracker instead of with a processing delay from PSKReporter.info. This could help me attain the Worked All States (WAS) and other awards from eQSL and LOTW faster than if I just listened for CQs on a single band since I could set up missing grid or missing state alerts in GridTracker and get them immediately on my desktop as reports come in. Then I could respond to those CQs of interest to get another missing state or grid.</p>
+<p>I don&rsquo;t like the waiting part of fishing and this was the perfect way to combine practical programming and Ham radio to lessen the chance involved in pursuing these awards by just calling CQ or being limited in my signals consumption and awareness capacity while trying to respond to others' CQs. This article is the culmination of a few months of casual experimentation and debugging and discusses how I was able to connect DigiSkimmer to GridTracker to receive 8 bands of HF at the same time, enabling DX Chasing and more effective multi-band award hunting by rapid band hopping operations.</p>
+<h1 id="background">Background</h1>
+<p>The <a class="link" href="http://kiwisdr.com/"  target="_blank" rel="noopener"
+    >KiwiSDR</a> is an FPGA-based beaglebone cape SDR which provides a user web interface using javascript and websockets. The program comes with built in web demodulators for common modes spanning SSB and WFM to Digital Radio Mondiale (DRM) and more. The web interface software is the baseline that spawned the still supported (now by a different author) <a class="link" href="https://www.openwebrx.de/"  target="_blank" rel="noopener"
+    >OpenWebRX</a> project.</p>
+<p><img src="http://kiwisdr.com/ks/proj.image.385px.jpg"
+	
+	
+	
+	loading="lazy"
+	
+		alt="http://kiwisdr.com/ks/proj.image.385px.jpg"
+	
+	
+></p>
+<p>In its &ldquo;more channels&rdquo; mode, KiwiSDR can serve 8 demodulated audio streams over websockets to 8 separate clients. Lazywalker&rsquo;s DigiSkimmer takes advantage of this capabiltiy to provide WSJT-X mode spots to PSKReporter or WSPR spots to WSPRNet by dynamically tasking these 8 audio streams to different WSJT mode signal allocations. Normally, the software simply connects to the audio channel websockets on KiwiSDR, pipes audio to WSJT-X command line decoders, parses the output decoded messages, and uploads reports to PSKReporter or WSPRNet. DigiSkimmer has a configurable schedule to switch bands and modes at certain times of day, but for the purposes of this project, I&rsquo;m simply covering FT8 on the 80, 40, 30, 20, 17, 15, 12, and 10 meter bands 24/7. Out of the box, this allows me to use DigiSkimmer to provide total situational awareness for amateur radio FT8 on all HF bands, all at the same time.</p>
+<p>Unfortunately, with the out of the box capabilties of DigiSkimmer, received signal reports are only viewable on the console in a difficult to interpret format (raw WSJT-X decode messages), or by querying the web services the reports are served to by API or web interface (e.g. PSKReporter&rsquo;s PSK Map). For the past year, PSKReporter forums have been full of complaints about processing delay which has at times exceeded several hours during contests. PSKReporter&rsquo;s view is not instant, even when working properly, and WSPRNet doesn&rsquo;t really support reports for modes other than WSPR. Also, neither of these services would appreciate the sheer amount of user queries made to get data on 15 second or faster intervals even if they could provide it at that rate. I&rsquo;m sure my client would be banned in short order for denial-of-service attack like behavior.</p>
+<p>Since what I want for operating FT8 with all-band HF receive while I&rsquo;m not transmitting is instantly viewable signal reports to enable DX chasing by rapid band hopping, I have to find another solution. If I could just feed signal reports from DigiSkimmer to some local software for for viewing reports, mapping them, and alerting me of interesting signals, I&rsquo;d have the capability I&rsquo;m looking for. This is where GridTracker comes in.</p>
+<p>GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but it&rsquo;s closed source. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker&rsquo;s views. WSJT-X is none the wiser that i&rsquo;m using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.</p>
+<p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology.png"
+	width="645"
+	height="348"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology_hueb63e69ce3877552dfdc06d3747a6737_58451_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology_hueb63e69ce3877552dfdc06d3747a6737_58451_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="185"
+		data-flex-basis="444px"
+	
+></p>
+<h1 id="software-implementation">Software Implementation</h1>
+<p>The first step in design implementation was either to reverse engineer the packets being sent by WSJT-X using WireShark, read the C++ source code and decipher what packets were being sent, or to find a FOSS library that did most of this work for me. I ended up forking bmo&rsquo;s py-wsjtx library and used the C++ WSJT-X source code and WireShark in tandem to help construct the packets the FOSS library did not provide. The py-wsjtx library was only written to receive some WSJT-X packets and decomm them, not build packets to fake heartbeats, statuses, and reports. I added these packet builders into the codebase, and I was off to the races.</p>
+<p>After building a library sufficient to impersonate WSJT-X over UDP, I had to plan out the interfaces between my various software and hardware. The below figures summarize what data will flow between hardware and software, but the TLDR is that DigiSkimmer will be provide decode packets to GridTracker and pay attention to status packets from real WSJT-X instances to not provide duplicate reports to GridTracker. GridTracker provides visualization of data and limited commanding to real WSJT-X instances for transmit operations.</p>
+<p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages.png"
+	width="956"
+	height="346"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages_hu6a18297b1701fb8d25daf2c76a37a5d8_96478_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages_hu6a18297b1701fb8d25daf2c76a37a5d8_96478_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="276"
+		data-flex-basis="663px"
+	
+></p>
+<p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Software_Messages.png"
+	width="839"
+	height="305"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Software_Messages_hu00b237c3cd23f935be30087c8c319233_63929_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Software_Messages_hu00b237c3cd23f935be30087c8c319233_63929_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="275"
+		data-flex-basis="660px"
+	
+></p>
+<p>After architecting what was to be implemented for software/hardware interfaces, the next step was to add code to the wsjt decoding function in DigiSkimmer which would send UDP packets out over a multicast UDP socket to GridTracker. I created an object in DigiSkimmer&rsquo;s codebase to be a thread safe shared UDP socket manager and created code to add packets to a broadcast queue in the decode function of DigiSkimmer. I thought I might be done at this point, but I did want to avoid collisions between decode packets of my real WSJT-X instance and my DigiSkimmer imposters, so there was more work to be done.</p>
+<p>Duplicate packets received by GridTracker limited my &ldquo;point and click&rdquo; operations whereby clicking on a CQ in the Call Roster of GridTracker automatically replies to the CQ in WSJT-X. Since the fake WSJT-X instances have no transmitters to control when given a reply command and GridTracker will only send a command back to the source WSJT-X instance for a report, I need any packets from real WSJT-X instances connected to radio transceivers to take precedence over ones reported from KiwiSDR via DigiSkimmer.</p>
+<p>To mitigate report collisions, I added code in the UDP socket manager class to listen for status packets from WSJT-X and provide a dictionary of excluded bands/modes for the broadcast queue entries in the DigiSkimmer decode function. I then had the DigiSkimmer decode method UDP broadcasting code check this list and not send reports that would be on the same band/mode as real WSJT-X instacnes in the exclusion list.</p>
+<p>After writing code to avoid packet collisions and broadcast the decoded WSJT-X packets I was mostly done, but there are a few more quirks I want to cover in this article for posterity&rsquo;s sake.</p>
+<p>For a long time, I was having a problem with the software where a few of the listener threads would stop working after a while, and I thought it might be multithreading related since the audio listeners implemented by DigiSkimmer run as separate python Thread objects. In reality, I just had the schedule for 24/7 written wrong in the python config file. It&rsquo;s supposed to be a * for a continuous schedule, not something like 0:00-23:59, which was causing only 4 threads to resume on the midnight rollover for some reason.</p>
+<p>I also had to make sure my UDP socket manager class was emptying the socket of all real WSJT-X packets and DigiSkimmer reports and not just reading back reports I was sending from DigiSkimmer at a rate which didn&rsquo;t empty the socket. Originally, the reports would fill up the socket faster than I was reading from it, so I wouldn&rsquo;t see updated status from real WSJT-X instances, resulting in a very outdated exclusion list for report broadcasting after DigiSkimmer had been running for some time.</p>
+<p>At the time of writing, I also have not implemented a UDP log packet object in the py-wsjtx library fork I&rsquo;ve been using. This is now set to just throw warnings in the DigiSkimmer logs as DigiSkimmer has no use for the logged QSOs anyway and the warning messages are largely harmless.</p>
+<h1 id="use-in-your-radio-shack">Use in Your Radio Shack</h1>
+<p>If you happen to have a <del>unicorn</del> KiwiSDR and you want to run this software yourself, you can download my forked DigiSkimmer from GitHub and also clone my forked py-wsjtx git submodule dependencies into it and run it on your own multicast network. Please note I&rsquo;m using a simlink for the location the py-wsjtx library, so it might not work properly on windows without some modification. As long as your multicast network is routable and you configure a valid settings.py file for DigiSkimmer the software should work in other environments. Links to my 2 forked and modified repos can be found below. I hope to catch you on the air, and remember, with great power comes great responsibilty. Please still call CQ!</p>
+<ul>
+<li>
+<p><a class="link" href="https://github.com/MeadeRobert/DigiSkimmer"  target="_blank" rel="noopener"
+    >https://github.com/MeadeRobert/DigiSkimmer</a></p>
+</li>
+<li>
+<p><a class="link" href="https://github.com/MeadeRobert/py-wsjtx/"  target="_blank" rel="noopener"
+    >https://github.com/MeadeRobert/py-wsjtx/</a></p>
+</li>
+</ul>
+<p>73 DE KB3WFQ</p>
+<p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes.png"
+	width="839"
+	height="558"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_hu1df65b0e95754e9c0ac3d0b6a32176b1_201123_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_hu1df65b0e95754e9c0ac3d0b6a32176b1_201123_1024x0_resize_box_3.png 1024w"
+	loading="lazy"
+	
+	
+		class="gallery-image" 
+		data-flex-grow="150"
+		data-flex-basis="360px"
+	
+></p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2021 - 
+        
+        2023 Robert Research Radios
+    </section>
+    
+    <section class="powerby">
+        
+            Robert's Research & Radios LLC <br/>
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.11.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.css"integrity="sha256-c0uckgykQ9v5k&#43;IqViZOZKc47Jn7KQil4/MP3ySA3F8="crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.css"integrity="sha256-SBLU4vv6CA6lHsZ1XyTdhyjJxCjPif/TRkjnsyGAGnE="crossorigin="anonymous"
+            >
+
+            </main>
+    
+
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.5/dist/vibrant.min.js"integrity="sha256-5NovOZc4iwiAWTYIFiIM7DxKUXKWvpVEuMEPLzcm5/g="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
