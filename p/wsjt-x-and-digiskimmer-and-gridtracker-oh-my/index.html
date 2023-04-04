@@ -239,20 +239,24 @@ Me: Yes.
 <p>The <a class="link" href="http://kiwisdr.com/"  target="_blank" rel="noopener"
     >KiwiSDR</a> is an FPGA-based beaglebone cape SDR which provides a user web interface using javascript and websockets. The program comes with built in web demodulators for common modes spanning SSB and WFM to Digital Radio Mondiale (DRM) and more. The web interface software is the baseline that spawned the still supported (now by a different author) <a class="link" href="https://www.openwebrx.de/"  target="_blank" rel="noopener"
     >OpenWebRX</a> project.</p>
-<p><img src="http://kiwisdr.com/ks/proj.image.385px.jpg"
-	
-	
-	
+<p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px.jpg"
+	width="385"
+	height="289"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px_hu10d43742c0723146441da210046f7f4c_68470_480x0_resize_q75_box.jpg 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px_hu10d43742c0723146441da210046f7f4c_68470_1024x0_resize_q75_box.jpg 1024w"
 	loading="lazy"
 	
-		alt="http://kiwisdr.com/ks/proj.image.385px.jpg"
+		alt="proj.image.385px.JPG"
 	
+	
+		class="gallery-image" 
+		data-flex-grow="133"
+		data-flex-basis="319px"
 	
 ></p>
 <p>In its &ldquo;more channels&rdquo; mode, KiwiSDR can serve 8 demodulated audio streams over websockets to 8 separate clients. Lazywalker&rsquo;s DigiSkimmer takes advantage of this capabiltiy to provide WSJT-X mode spots to PSKReporter or WSPR spots to WSPRNet by dynamically tasking these 8 audio streams to different WSJT mode signal allocations. Normally, the software simply connects to the audio channel websockets on KiwiSDR, pipes audio to WSJT-X command line decoders, parses the output decoded messages, and uploads reports to PSKReporter or WSPRNet. DigiSkimmer has a configurable schedule to switch bands and modes at certain times of day, but for the purposes of this project, I&rsquo;m simply covering FT8 on the 80, 40, 30, 20, 17, 15, 12, and 10 meter bands 24/7. Out of the box, this allows me to use DigiSkimmer to provide total situational awareness for amateur radio FT8 on all HF bands, all at the same time.</p>
 <p>Unfortunately, with the out of the box capabilties of DigiSkimmer, received signal reports are only viewable on the console in a difficult to interpret format (raw WSJT-X decode messages), or by querying the web services the reports are served to by API or web interface (e.g. PSKReporter&rsquo;s PSK Map). For the past year, PSKReporter forums have been full of complaints about processing delay which has at times exceeded several hours during contests. PSKReporter&rsquo;s view is not instant, even when working properly, and WSPRNet doesn&rsquo;t really support reports for modes other than WSPR. Also, neither of these services would appreciate the sheer amount of user queries made to get data on 15 second or faster intervals even if they could provide it at that rate. I&rsquo;m sure my client would be banned in short order for denial-of-service attack like behavior.</p>
 <p>Since what I want for operating FT8 with all-band HF receive while I&rsquo;m not transmitting is instantly viewable signal reports to enable DX chasing by rapid band hopping, I have to find another solution. If I could just feed signal reports from DigiSkimmer to some local software for for viewing reports, mapping them, and alerting me of interesting signals, I&rsquo;d have the capability I&rsquo;m looking for. This is where GridTracker comes in.</p>
-<p>GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but it&rsquo;s closed source. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker&rsquo;s views. WSJT-X is none the wiser that i&rsquo;m using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.</p>
+<p>GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but I don&rsquo;t really want to fork it&rsquo;s FOSS repo on gitlab. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker&rsquo;s views. WSJT-X is none the wiser that i&rsquo;m using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.</p>
 <p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology.png"
 	width="645"
 	height="348"
@@ -311,11 +315,10 @@ Me: Yes.
     >https://github.com/MeadeRobert/py-wsjtx/</a></p>
 </li>
 </ul>
-<p>73 DE KB3WFQ</p>
 <p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes.png"
 	width="839"
 	height="558"
-	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_hu1df65b0e95754e9c0ac3d0b6a32176b1_201123_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_hu1df65b0e95754e9c0ac3d0b6a32176b1_201123_1024x0_resize_box_3.png 1024w"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_huc42ae68fc035a8fbc8963f684b322c00_194971_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_huc42ae68fc035a8fbc8963f684b322c00_194971_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 	

@@ -25,7 +25,7 @@ I don't like the waiting part of fishing and this was the perfect way to combine
 
 The [KiwiSDR](http://kiwisdr.com/) is an FPGA-based beaglebone cape SDR which provides a user web interface using javascript and websockets. The program comes with built in web demodulators for common modes spanning SSB and WFM to Digital Radio Mondiale (DRM) and more. The web interface software is the baseline that spawned the still supported (now by a different author) [OpenWebRX](https://www.openwebrx.de/) project.
 
-![http://kiwisdr.com/ks/proj.image.385px.jpg](http://kiwisdr.com/ks/proj.image.385px.jpg)
+![proj.image.385px.JPG](proj.image.385px.JPG)
 
 In its "more channels" mode, KiwiSDR can serve 8 demodulated audio streams over websockets to 8 separate clients. Lazywalker's DigiSkimmer takes advantage of this capabiltiy to provide WSJT-X mode spots to PSKReporter or WSPR spots to WSPRNet by dynamically tasking these 8 audio streams to different WSJT mode signal allocations. Normally, the software simply connects to the audio channel websockets on KiwiSDR, pipes audio to WSJT-X command line decoders, parses the output decoded messages, and uploads reports to PSKReporter or WSPRNet. DigiSkimmer has a configurable schedule to switch bands and modes at certain times of day, but for the purposes of this project, I'm simply covering FT8 on the 80, 40, 30, 20, 17, 15, 12, and 10 meter bands 24/7. Out of the box, this allows me to use DigiSkimmer to provide total situational awareness for amateur radio FT8 on all HF bands, all at the same time.
 
@@ -33,7 +33,7 @@ Unfortunately, with the out of the box capabilties of DigiSkimmer, received sign
 
 Since what I want for operating FT8 with all-band HF receive while I'm not transmitting is instantly viewable signal reports to enable DX chasing by rapid band hopping, I have to find another solution. If I could just feed signal reports from DigiSkimmer to some local software for for viewing reports, mapping them, and alerting me of interesting signals, I'd have the capability I'm looking for. This is where GridTracker comes in.
 
-GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but it's closed source. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker's views. WSJT-X is none the wiser that i'm using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.
+GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but I don't really want to fork it's FOSS repo on gitlab. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker's views. WSJT-X is none the wiser that i'm using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.
 
 ![](Network_Topology.PNG)
 
@@ -61,7 +61,7 @@ I also had to make sure my UDP socket manager class was emptying the socket of a
 
 At the time of writing, I also have not implemented a UDP log packet object in the py-wsjtx library fork I've been using. This is now set to just throw warnings in the DigiSkimmer logs as DigiSkimmer has no use for the logged QSOs anyway and the warning messages are largely harmless.
 
-# How to Use/Deploy for your Radio Shack
+# Use in Your Radio Shack
 
 If you happen to have a ~~unicorn~~ KiwiSDR and you want to run this software yourself, you can download my forked DigiSkimmer from GitHub and also clone my forked py-wsjtx git submodule dependencies into it and run it on your own multicast network. Please note I'm using a simlink for the location the py-wsjtx library, so it might not work properly on windows without some modification. As long as your multicast network is routable and you configure a valid settings.py file for DigiSkimmer the software should work in other environments. Links to my 2 forked and modified repos can be found below. I hope to catch you on the air, and remember, with great power comes great responsibilty. Please still call CQ!
 

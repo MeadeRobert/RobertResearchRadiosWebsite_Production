@@ -37,20 +37,24 @@ Me: Yes.
 &lt;p&gt;The &lt;a class=&#34;link&#34; href=&#34;http://kiwisdr.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;KiwiSDR&lt;/a&gt; is an FPGA-based beaglebone cape SDR which provides a user web interface using javascript and websockets. The program comes with built in web demodulators for common modes spanning SSB and WFM to Digital Radio Mondiale (DRM) and more. The web interface software is the baseline that spawned the still supported (now by a different author) &lt;a class=&#34;link&#34; href=&#34;https://www.openwebrx.de/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;OpenWebRX&lt;/a&gt; project.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;http://kiwisdr.com/ks/proj.image.385px.jpg&#34;
-	
-	
-	
+&lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px.jpg&#34;
+	width=&#34;385&#34;
+	height=&#34;289&#34;
+	srcset=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px_hu10d43742c0723146441da210046f7f4c_68470_480x0_resize_q75_box.jpg 480w, https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px_hu10d43742c0723146441da210046f7f4c_68470_1024x0_resize_q75_box.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;http://kiwisdr.com/ks/proj.image.385px.jpg&#34;
+		alt=&#34;proj.image.385px.JPG&#34;
 	
+	
+		class=&#34;gallery-image&#34; 
+		data-flex-grow=&#34;133&#34;
+		data-flex-basis=&#34;319px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;In its &amp;ldquo;more channels&amp;rdquo; mode, KiwiSDR can serve 8 demodulated audio streams over websockets to 8 separate clients. Lazywalker&amp;rsquo;s DigiSkimmer takes advantage of this capabiltiy to provide WSJT-X mode spots to PSKReporter or WSPR spots to WSPRNet by dynamically tasking these 8 audio streams to different WSJT mode signal allocations. Normally, the software simply connects to the audio channel websockets on KiwiSDR, pipes audio to WSJT-X command line decoders, parses the output decoded messages, and uploads reports to PSKReporter or WSPRNet. DigiSkimmer has a configurable schedule to switch bands and modes at certain times of day, but for the purposes of this project, I&amp;rsquo;m simply covering FT8 on the 80, 40, 30, 20, 17, 15, 12, and 10 meter bands 24/7. Out of the box, this allows me to use DigiSkimmer to provide total situational awareness for amateur radio FT8 on all HF bands, all at the same time.&lt;/p&gt;
 &lt;p&gt;Unfortunately, with the out of the box capabilties of DigiSkimmer, received signal reports are only viewable on the console in a difficult to interpret format (raw WSJT-X decode messages), or by querying the web services the reports are served to by API or web interface (e.g. PSKReporter&amp;rsquo;s PSK Map). For the past year, PSKReporter forums have been full of complaints about processing delay which has at times exceeded several hours during contests. PSKReporter&amp;rsquo;s view is not instant, even when working properly, and WSPRNet doesn&amp;rsquo;t really support reports for modes other than WSPR. Also, neither of these services would appreciate the sheer amount of user queries made to get data on 15 second or faster intervals even if they could provide it at that rate. I&amp;rsquo;m sure my client would be banned in short order for denial-of-service attack like behavior.&lt;/p&gt;
 &lt;p&gt;Since what I want for operating FT8 with all-band HF receive while I&amp;rsquo;m not transmitting is instantly viewable signal reports to enable DX chasing by rapid band hopping, I have to find another solution. If I could just feed signal reports from DigiSkimmer to some local software for for viewing reports, mapping them, and alerting me of interesting signals, I&amp;rsquo;d have the capability I&amp;rsquo;m looking for. This is where GridTracker comes in.&lt;/p&gt;
-&lt;p&gt;GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but it&amp;rsquo;s closed source. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker&amp;rsquo;s views. WSJT-X is none the wiser that i&amp;rsquo;m using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.&lt;/p&gt;
+&lt;p&gt;GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but I don&amp;rsquo;t really want to fork it&amp;rsquo;s FOSS repo on gitlab. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker&amp;rsquo;s views. WSJT-X is none the wiser that i&amp;rsquo;m using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology.png&#34;
 	width=&#34;645&#34;
 	height=&#34;348&#34;
@@ -109,11 +113,10 @@ Me: Yes.
     &gt;https://github.com/MeadeRobert/py-wsjtx/&lt;/a&gt;&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;73 DE KB3WFQ&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes.png&#34;
 	width=&#34;839&#34;
 	height=&#34;558&#34;
-	srcset=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_hu1df65b0e95754e9c0ac3d0b6a32176b1_201123_480x0_resize_box_3.png 480w, https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_hu1df65b0e95754e9c0ac3d0b6a32176b1_201123_1024x0_resize_box_3.png 1024w&#34;
+	srcset=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_huc42ae68fc035a8fbc8963f684b322c00_194971_480x0_resize_box_3.png 480w, https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Meme_Chad_Yes_huc42ae68fc035a8fbc8963f684b322c00_194971_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
