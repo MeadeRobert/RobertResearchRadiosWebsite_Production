@@ -256,15 +256,15 @@ Me: Yes.
 <p>Since what I want for operating FT8 with all-band HF receive while I&rsquo;m not transmitting is instantly viewable signal reports to enable DX chasing by rapid band hopping, I have to find another solution. If I could just feed signal reports from DigiSkimmer to some local software for for viewing reports, mapping them, and alerting me of interesting signals, I&rsquo;d have the capability I&rsquo;m looking for. This is where GridTracker comes in.</p>
 <p>GridTracker is a piece of software from N0TTL that displays real-time signal reports from WSJT-X on a map, but I don&rsquo;t really want to fork it&rsquo;s FOSS repo on gitlab. No matter, WSJT-X feeds it data over UDP sockets, and it supports a multicast network. If I configure a network where multicast routing is supported between my software services like the one shown below, I can simply have DigiSkimmer send multicast packets pretending to be instances of WSJT-X, labeled in some way that makes it easy to sort my data in GridTracker&rsquo;s views. WSJT-X is none the wiser that i&rsquo;m using DigiSkimmer instead of 8 instances of the real FT8 operating software from Joe Taylor at Princeton. The implementation of this concept provided me with exactly what I wanted.</p>
 <p><img src="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology.png"
-	width="645"
-	height="348"
-	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology_hueb63e69ce3877552dfdc06d3747a6737_58451_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology_hueb63e69ce3877552dfdc06d3747a6737_58451_1024x0_resize_box_3.png 1024w"
+	width="649"
+	height="333"
+	srcset="/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology_hud4b26e2ac05e79f943da316500f99a35_57681_480x0_resize_box_3.png 480w, /p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Network_Topology_hud4b26e2ac05e79f943da316500f99a35_57681_1024x0_resize_box_3.png 1024w"
 	loading="lazy"
 	
 	
 		class="gallery-image" 
-		data-flex-grow="185"
-		data-flex-basis="444px"
+		data-flex-grow="194"
+		data-flex-basis="467px"
 	
 ></p>
 <h1 id="software-implementation">Software Implementation</h1>
