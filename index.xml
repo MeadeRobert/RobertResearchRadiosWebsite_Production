@@ -43,8 +43,6 @@ Me: Yes.
 	srcset=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px_hu10d43742c0723146441da210046f7f4c_68470_480x0_resize_q75_box.jpg 480w, https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/proj.image.385px_hu10d43742c0723146441da210046f7f4c_68470_1024x0_resize_q75_box.jpg 1024w&#34;
 	loading=&#34;lazy&#34;
 	
-		alt=&#34;proj.image.385px.JPG&#34;
-	
 	
 		class=&#34;gallery-image&#34; 
 		data-flex-grow=&#34;133&#34;
@@ -72,14 +70,14 @@ Me: Yes.
 &lt;p&gt;After building a library sufficient to impersonate WSJT-X over UDP, I had to plan out the interfaces between my various software and hardware. The below figures summarize what data will flow between hardware and software, but the TLDR is that DigiSkimmer will be provide decode packets to GridTracker and pay attention to status packets from real WSJT-X instances to not provide duplicate reports to GridTracker. GridTracker provides visualization of data and limited commanding to real WSJT-X instances for transmit operations.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages.png&#34;
 	width=&#34;956&#34;
-	height=&#34;346&#34;
-	srcset=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages_hu6a18297b1701fb8d25daf2c76a37a5d8_96478_480x0_resize_box_3.png 480w, https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages_hu6a18297b1701fb8d25daf2c76a37a5d8_96478_1024x0_resize_box_3.png 1024w&#34;
+	height=&#34;333&#34;
+	srcset=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages_hu858034ae3c8e2e62e63c361c8698189e_95664_480x0_resize_box_3.png 480w, https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Hardware_Messages_hu858034ae3c8e2e62e63c361c8698189e_95664_1024x0_resize_box_3.png 1024w&#34;
 	loading=&#34;lazy&#34;
 	
 	
 		class=&#34;gallery-image&#34; 
-		data-flex-grow=&#34;276&#34;
-		data-flex-basis=&#34;663px&#34;
+		data-flex-grow=&#34;287&#34;
+		data-flex-basis=&#34;689px&#34;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://robertresearchradios.com/p/wsjt-x-and-digiskimmer-and-gridtracker-oh-my/Software_Messages.png&#34;
